@@ -1,5 +1,7 @@
 # Search for a number in an ordered array list
 
+
+
 /**
  * This program searches for a positive number in an array, which must be sorted in ascending or descending order.
  * If the key number is greater than the middle number, then it will set the middle number
@@ -8,6 +10,7 @@
  * the middle number will be set as the last number of the list. Return false if the key number
  * does not appear on the list.
  */
+
 
 package lessons;
 
