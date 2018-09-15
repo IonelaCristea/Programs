@@ -1,4 +1,4 @@
-# Programs
+# Array binary Search. Search for a number in an array list
 
 /**
  * This program searches for a positive number in an array, which must be sorted in ascending or descending order.
