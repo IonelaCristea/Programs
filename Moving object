@@ -1,0 +1,223 @@
+/**
+ * This class displays on the screen a window of type JFrame. The window contains a panel of JPanel with an oval
+ * with an initial position. On mouse click, the panel changes its background color, and 
+ * the oval takes the mouse coordinates and changes its color.
+ */
+
+package movingObject;
+
+import java.awt.BorderLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JFrame;
+/**
+ * Date 17.09.2017
+ * @author Ionela Cristea
+ * @version 1.0
+ */
+
+public class OvalWindow {
+
+	// Window that contains the panel
+	JFrame window;
+	// Panel with elements
+	OvalPanel panel;
+	//Initiate window width
+	private final int WINDOW_WIDTH = 500;
+	//Initiate window height
+	private final int WINDOW_HEIGHT = 500;
+
+	/**
+	 * Run the program
+	 */
+	public void run() {
+		// Initiate the window
+		window = new JFrame("Moving oval");
+		//Set window visibility
+		window.setVisible(true);
+		// Set window size
+		window.setSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+		//Set a safe exit
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// Initiate the panel and add it in the center of the window
+		panel = new OvalPanel();
+		window.add(panel, BorderLayout.CENTER);
+
+		// When click on the panel, move the object to the mouse coordinates 
+		// and change its color and the panel background color
+		panel.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				panel.moveToCoord(e);
+				panel.changeColor();
+			}
+		});
+		
+
+	}
+/**
+ * Main method
+ * @param args
+ */
+	public static void main(String[] args) {
+		OvalWindow oWndow = new OvalWindow();
+		oWndow.run();
+	}
+
+}
+
+
+
+
+
+package movingObject;
+
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import javax.swing.JPanel;
+
+/**
+ * This class represents a panel that initiate an object of type Oval, and paint it to the panel.
+ * Therefore, initiate a methods that reads the mouse click coordinates, and redirect the oval
+ * to that coordinates. In the same time the oval color and background color change.
+ *
+ */
+public class OvalPanel extends JPanel implements ActionListener{
+	// Create a reference to the oval class.
+	Oval oval;
+	// Initiate a x position on the screen
+	private int x = 50;
+	// Initiate a y position on the screen
+	private int y = 10;
+	// Initiate oval diameter
+	private int diameter = 50;
+	
+	// Create a range of background colors 
+	private Color [] colorsBackground = {Color.ORANGE, Color.RED, Color.GREEN };
+	//Create a range of shapes colors
+	private Color [] colorsShape = {Color.GREEN, Color.MAGENTA, Color.RED };
+	//Set an initial color index
+	private int colorIndex = 0;
+	//Set an initial shape color
+	private Color newColor = colorsShape[0]; 
+
+	/**
+	 * Get the coordinates of the mouse
+	 * @param mouse event
+	 * repaint the screen
+	 */
+	protected void moveToCoord(MouseEvent e) {
+		x = e.getX() - oval.getDiameter()/2;
+		y = e.getY() - oval.getDiameter()/2;
+		repaint();
+
+	}
+	
+	
+	/**
+	 * Change oval color and background color
+	 */
+	protected void changeColor() {
+		colorIndex =++ colorIndex % colorsShape.length;
+		newColor = colorsShape[colorIndex];
+		setBackground(colorsBackground[colorIndex]);
+	}
+
+	/**
+	 * Draw the object on the panel
+	 */
+	@Override
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		oval = new Oval(x, y, diameter, newColor);
+		oval.draw(g);
+
+	}
+
+	/**
+	 * Required by java to be implemented
+	 */
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+	}
+
+}
+
+
+package movingObject;
+
+import java.awt.Color;
+import java.awt.Graphics;
+
+/**
+ * Create an Oval object that will be added to the panel.
+ *
+ */
+public class Oval {
+
+	private int diameter;
+	private int x;
+	private int y;
+	private Color color;
+
+	/**
+	 * Constructor for the oval object.
+	 * @param x        coordinate the x position of the oval on the screen
+	 * @param y        coordinate the y position of the oval on the screen
+	 * @param diameter of the oval
+	 * @param color    of the oval
+	 */
+	public Oval(int x, int y, int diameter, Color color) {
+		this.x = x;
+		this.y = y;
+		this.diameter = diameter;
+		this.color = color;
+	}
+
+	/**
+	 * Get x object position
+	 * @return x position
+	 */
+	public int getX() {
+		return x;
+	}
+	
+	/**
+	 * Get y object position
+	 * @return y position
+	 */
+	public int getY() {
+		return y;
+	}
+
+	/**
+	 * Get the diameter of the object
+	 * @return the diameter of the object
+	 */
+	public int getDiameter() {
+		return diameter;
+	}
+
+	/**
+	 * Get the color of the object
+	 * @return the color of the object
+	 */
+	public Color getColor() {
+		return color;
+	}
+
+	/**
+	 * Draw the object on the screen
+	 * @param g graphic
+	 */
+	public void draw(Graphics g) {
+		g.setColor(color);
+		g.fillOval(x, y, diameter, diameter);
+
+	}
+
+}
