@@ -1,0 +1,64 @@
+
+/*
+ * File: FlippingCoint.java
+ * ------------------------
+ * This program keeps track of how many times a program runs 
+ * until a flip coin falls consecutively with the head up.
+ */
+
+import java.util.Random;
+
+/**
+ * Date 1.08.2018
+ * @author Ionela Cristea
+ * @version 1.0
+ */
+public class FlippingCoint {
+	Random random = new Random();
+	// Consecutive heads tossed
+	private static final int CONSECUTIVE_HEADS = 3;
+
+	/**
+	 * Run the program
+	 */
+	private void run() {
+		// Initiate the count of the consecutive heads tossed
+		int count = 0;
+		// Initiate the flips
+		int flips = 0;
+		while (count < CONSECUTIVE_HEADS) {
+			// Generate a random coin side that falls up
+			String cointFace = randomCoinFace();
+			System.out.println(cointFace);
+			// Increase the count only if the random side of the coin is the Head
+			if (cointFace.equals("Head")) {
+				count++;
+				// Otherwise reset the count to 0 each time
+			} else {
+				count = 0;
+			}
+			// keep track of each flip
+			flips++;
+		}
+		System.out.println("It took " + flips + " runs to get" + CONSECUTIVE_HEADS + "conesecutive heads");
+	}
+
+	/**
+	 * Generate a random coin side flip 
+	 * @return a random side
+	 */
+	private String randomCoinFace() {
+		boolean face = random.nextBoolean();
+		return face ? "Head" : "Tail";
+	}
+
+	/**
+	 * Main method
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		FlippingCoint eFc = new FlippingCoint();
+		eFc.run();
+
+	}
+}
