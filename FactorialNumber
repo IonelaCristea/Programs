@@ -1,0 +1,48 @@
+/*
+ * File: FactorialTable.java
+ * ----------------------------------
+ * This file generates a table of factorials.
+ * */
+
+package lessons;
+
+public class FactorialTable {
+	
+	/* Lower limit for the table */
+	private static final int LOWER_LIMIT = 0;
+	
+	/* Upper limit for the table */
+	private static final int UPER_LIMIT = 10;
+	
+
+	
+	/**
+	 * runs the program 
+	*/
+	private void run() {
+		for (int i = LOWER_LIMIT; i <= UPER_LIMIT; i++ ) {
+			System.out.println( i + " ! = " + factorial (i));
+		}
+	}
+	
+	/**
+	 * Returns the factorial of n, which is defined as the 
+	 * product of all integers from 1 up to n
+	 * */
+	private int factorial (int num) {
+		int res = 1;
+		for (int i = 1; i <= num; i++) {
+			res *= i;
+		}
+		return res;
+	}
+	
+	/**
+	 * Main method
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		FactorialTable  eft = new FactorialTable ();
+		eft.run();
+	}
+}
